@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_one.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 23:14:47 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/08 23:41:10 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/10 21:46:14 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,21 @@ typedef enum		e_errors
 	BAD_ARGS = 1
 }					t_errors;
 
-int				philo_one(int argc, char **argv);
-int				print_error(t_errors error);
-void			ft_putstr(const char *str);
+typedef struct		s_args
+{
+	size_t			number_of_philosophers;
+	size_t			time_to_die;
+	size_t			time_to_sleep;
+	size_t			number_of_times_each_philosopher_must_eat;
+}					t_args;
+
+typedef struct		s_philo
+{
+	t_args			params;
+}					t_philo;
+
+int					philo_one(int argc, char **argv);
+int					print_error(t_errors error);
+void				ft_putstr(const char *str);
 
 #endif
