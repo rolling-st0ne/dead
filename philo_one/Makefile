@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: casteria <casteria@student.42.fr>          +#+  +:+       +#+         #
+#    By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/08 23:14:28 by casteria          #+#    #+#              #
-#    Updated: 2020/10/08 23:40:01 by casteria         ###   ########.fr        #
+#    Updated: 2020/10/12 00:23:08 by casteria         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo_one
 HEADER = philo_one.h
-SRCS = main.c print_error.c utils.c#init.c philo.c process.c print.c clean.c utils.c
+SRCS = main.c errors.c utils.c#init.c philo.c process.c print.c clean.c utils.c
 OBJS = $(SRCS:.c=.o)
 CC = clang
 CFLAGS = -Wall -Wextra -Werror

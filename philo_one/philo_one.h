@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 23:14:47 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/10 21:46:14 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/12 02:31:34 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 # define STD_OUT 1
 # define SUCCESS 0
+# define FAIL -1
 
 typedef enum		e_errors
 {
@@ -33,13 +34,22 @@ typedef struct		s_args
 	size_t			number_of_times_each_philosopher_must_eat;
 }					t_args;
 
-typedef struct		s_philo
+typedef struct		s_philosopher
+{
+	pthread_t		id;
+}					t_philosopher;
+
+typedef struct		s_philosophers
 {
 	t_args			params;
-}					t_philo;
+	t_philosopher	**philosophers;
+
+}					t_philosophers;
 
 int					philo_one(int argc, char **argv);
 int					print_error(t_errors error);
 void				ft_putstr(const char *str);
+int					ft_atoi(const char *c);
+int					init(int argc, char **argv, t_philosophers philosophers);
 
 #endif
