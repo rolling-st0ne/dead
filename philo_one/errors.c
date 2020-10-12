@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_error.c                                      :+:      :+:    :+:   */
+/*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 23:26:14 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/08 23:43:10 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/12 17:35:42 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 int			print_error(t_errors error)
 {
 	if (error == BAD_ARGS)
-		ft_putstr("Error.\nWrong number of arguments.\n");
+		ft_putstr("Error.\nBad args.\n");
 	return (error);
 }

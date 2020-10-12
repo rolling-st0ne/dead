@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 23:35:51 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/12 03:32:21 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/12 17:41:25 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ static int		ft_is_space(const char *c)
 	else
 		return (0);
 }
-
 
 int				ft_atoi(const char *c)
 {
@@ -51,7 +50,6 @@ int				ft_atoi(const char *c)
 	}
 	return ((int)result * sign);
 }
-
 
 void			ft_putstr(const char *str)
 {

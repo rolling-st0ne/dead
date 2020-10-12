@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 00:26:57 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/12 03:32:49 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/13 00:36:14 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,18 @@
 
 static int			analyze_input_data(int argc, char **argv)
 {
-	size_t			index;
+	int				index;
 
 	if (argc < 5 || argc > 6)
 		return (print_error(BAD_ARGS));
-	index = 0;
-	while (argv[index])
+	index = 1;
+	while (index < argc)
 	{
 		if (ft_atoi(argv[index]) <= 0)
 			return (print_error(BAD_ARGS));
 		index++;
 	}
-	if (ft_atoi(argv[2]) < 2)
+	if (ft_atoi(argv[1]) < 2)
 		return (print_error(BAD_ARGS));
 	return (SUCCESS);
 }
@@ -49,16 +49,17 @@ static int			get_data(int argc, char **argv, \
 	return (status);
 }
 
-static int			create_philosopher(t_philosopher *philosopher)
+static int			create_philosopher(t_philosopher **philosopher)
 {
-	philosopher = malloc(sizeof(t_philosopher));
-	if (philosopher == NULL)
+	*philosopher = (t_philosopher *)malloc(sizeof(t_philosopher));
+	if (*philosopher == NULL)
 		return (FAIL);
+	return (SUCCESS);
 }
 
 static int			set_philosophers(t_philosophers *philosophers)
 {
-	size_t			index;
+	int				index;
 	int				count;
 
 	count = philosophers->params.number_of_philosophers;
@@ -67,9 +68,10 @@ static int			set_philosophers(t_philosophers *philosophers)
 		return (FAIL);
 	index = 0;
 	while (index < count)
-		if (create_philosopher(philosophers->philosophers[index++]) == FAIL)
+		if (create_philosopher(&philosophers->philosophers[index++]) == FAIL)
 			return (FAIL);
 	philosophers->philosophers[index] = NULL;
+	return (SUCCESS);
 }
 
 int					init(int argc, char **argv, t_philosophers *philosophers)
@@ -79,6 +81,7 @@ int					init(int argc, char **argv, t_philosophers *philosophers)
 	status = get_data(argc, argv, philosophers);
 	if (status)
 		return (status);
+	philosophers->forks = philosophers->params.number_of_philosophers;
 	status = set_philosophers(philosophers);
 	return (status);
 }

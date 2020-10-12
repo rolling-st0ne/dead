@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 23:18:44 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/12 03:21:26 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/13 00:22:50 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ int			main(int argc, char **argv)
 	exec_failed = init(argc, argv, &philosophers);
 	if (exec_failed)
 		return (exec_failed);
-//	exec_failed = vicious_circle(philosophers);
-	
-	return (SUCCESS);
+	exec_failed = start(&philosophers);
+	if (exec_failed)
+		return (exec_failed);
+	exec_failed = wait_till_death(&philosophers);
+	return (exec_failed ? exec_failed : SUCCESS);
 }
