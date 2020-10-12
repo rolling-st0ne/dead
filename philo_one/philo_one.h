@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 23:14:47 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/12 02:31:34 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/12 03:21:46 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,6 @@ int					philo_one(int argc, char **argv);
 int					print_error(t_errors error);
 void				ft_putstr(const char *str);
 int					ft_atoi(const char *c);
-int					init(int argc, char **argv, t_philosophers philosophers);
+int					init(int argc, char **argv, t_philosophers *philosophers);
 
 #endif

@@ -6,11 +6,28 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 23:35:51 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/12 01:18:33 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/12 03:32:21 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_one.h"
+
+static int		ft_isdigit(int c)
+{
+	if (c >= 48 && c <= 57)
+		return (1);
+	return (0);
+}
+
+static int		ft_is_space(const char *c)
+{
+	if (*c == '\n' || *c == '\t' || *c == '\r' || *c == '\v' ||
+			*c == '\f' || *c == ' ')
+		return (1);
+	else
+		return (0);
+}
+
 
 int				ft_atoi(const char *c)
 {
