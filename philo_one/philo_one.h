@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 23:14:47 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/13 00:36:00 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/14 00:35:28 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,12 @@
 # include <unistd.h>
 # include <stdio.h> // to_delete
 # include <stdlib.h>
+# include <sys/time.h>
 
 # define STD_OUT 1
 # define SUCCESS 0
 # define FAIL -1
+# define ETERNITY_OF_PAINFUL_EXISTANCE 1
 
 typedef enum		e_errors
 {
@@ -39,15 +41,28 @@ typedef struct		s_philosopher
 {
 	pthread_t		id;
 	pthread_mutex_t	mutex;
+	int				index;
 	int				err_status;
 }					t_philosopher;
 
+typedef struct		s_params
+{
+	t_args			args;
+	size_t			forks;
+	long long		s_time;
+}					t_params;
+
 typedef struct		s_philosophers
 {
-	t_args			params;
+	t_params		params;
 	t_philosopher	**philosophers;
-	size_t			forks;
 }					t_philosophers;
+
+typedef struct		s_thread_info
+{
+	t_philosopher	**philo;
+	t_params		*params;
+}					t_thread_info;
 
 int					philo_one(int argc, char **argv);
 int					print_error(t_errors error);
@@ -55,6 +70,8 @@ void				ft_putstr(const char *str);
 int					ft_atoi(const char *c);
 int					init(int argc, char **argv, t_philosophers *philosophers);
 int					start(t_philosophers *p);
+long long			get_time(void);
 int					wait_till_death(t_philosophers *p);
+void				*vicious_circle(void *arg);
 
 #endif

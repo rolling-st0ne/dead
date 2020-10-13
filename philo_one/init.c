@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 00:26:57 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/13 00:36:14 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/13 23:08:53 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,22 +38,23 @@ static int			get_data(int argc, char **argv, \
 	status = analyze_input_data(argc, argv);
 	if (status != SUCCESS)
 		return (status);
-	philosophers->params.number_of_philosophers = ft_atoi(argv[1]);
-	philosophers->params.time_to_die = ft_atoi(argv[2]);
-	philosophers->params.time_to_sleep = ft_atoi(argv[3]);
+	philosophers->params.args.number_of_philosophers = ft_atoi(argv[1]);
+	philosophers->params.args.time_to_die = ft_atoi(argv[2]);
+	philosophers->params.args.time_to_sleep = ft_atoi(argv[3]);
 	if (argv[4])
-		philosophers->params.number_of_times_each_philosopher_must_eat = \
+		philosophers->params.args.number_of_times_each_philosopher_must_eat = \
 			ft_atoi(argv[4]);
 	else
-		philosophers->params.number_of_times_each_philosopher_must_eat = -1;
+		philosophers->params.args.number_of_times_each_philosopher_must_eat = -1;
 	return (status);
 }
 
-static int			create_philosopher(t_philosopher **philosopher)
+static int			create_philosopher(t_philosopher **philosopher, int index)
 {
 	*philosopher = (t_philosopher *)malloc(sizeof(t_philosopher));
 	if (*philosopher == NULL)
 		return (FAIL);
+	(*philosopher)->index = ++index;
 	return (SUCCESS);
 }
 
@@ -62,14 +63,17 @@ static int			set_philosophers(t_philosophers *philosophers)
 	int				index;
 	int				count;
 
-	count = philosophers->params.number_of_philosophers;
+	count = philosophers->params.args.number_of_philosophers;
 	philosophers->philosophers = malloc(sizeof(t_philosopher*) * (count + 1));
 	if (philosophers->philosophers == NULL)
 		return (FAIL);
 	index = 0;
 	while (index < count)
-		if (create_philosopher(&philosophers->philosophers[index++]) == FAIL)
+	{
+		if (create_philosopher(&philosophers->philosophers[index], index) == FAIL)
 			return (FAIL);
+		index++;
+	}
 	philosophers->philosophers[index] = NULL;
 	return (SUCCESS);
 }
@@ -81,7 +85,7 @@ int					init(int argc, char **argv, t_philosophers *philosophers)
 	status = get_data(argc, argv, philosophers);
 	if (status)
 		return (status);
-	philosophers->forks = philosophers->params.number_of_philosophers;
+	philosophers->params.forks = philosophers->params.args.number_of_philosophers;
 	status = set_philosophers(philosophers);
 	return (status);
 }

@@ -6,11 +6,25 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 23:35:51 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/12 17:41:25 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/13 21:47:43 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_one.h"
+
+long long		get_time(void)
+{
+	long long		milliseconds;
+	struct timeval	tv;
+	int				status;
+
+	status = 0;
+	status = gettimeofday(&tv, NULL);
+	if (status)
+		return (FAIL);
+	milliseconds = tv.tv_sec * 1000 + tv.tv_usec / 1000;
+	return (milliseconds);
+}
 
 static int		ft_isdigit(int c)
 {
