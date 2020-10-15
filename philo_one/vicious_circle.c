@@ -6,13 +6,12 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 17:42:07 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/14 00:37:58 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/15 23:51:03 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_one.h"
-
-
+/*
 static int			eat(t_thread_info *p)
 {
 	int				status;
@@ -35,14 +34,18 @@ static int			try_not_to_die(t_thread_info *p)
 //	while (eat(p)
 	return (0);
 }
-
+*/
 void				*vicious_circle(void *arg)
 {
 	int				status;
+	t_philosopher	*phil;
 
 	status = 0;
-	while (ETERNITY_OF_PAINFUL_EXISTANCE)
-		try_not_to_die(((t_thread_info *)arg));
+	phil = (t_philosopher *)arg;
+	// while (ETERNITY_OF_PAINFUL_EXISTANCE)
+	// try_not_to_die(((t_thread_info *)arg));
+//	pthread_mutex_lock(phil->params->forks)
+	printf("OK, ama philo number %d\n", phil->index);
 	pthread_exit(NULL);
 	return (NULL);
 }

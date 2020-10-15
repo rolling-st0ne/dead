@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 23:35:51 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/13 21:47:43 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/16 00:05:51 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ long long		get_time(void)
 	status = 0;
 	status = gettimeofday(&tv, NULL);
 	if (status)
-		return (FAIL);
+		return (TIME);
 	milliseconds = tv.tv_sec * 1000 + tv.tv_usec / 1000;
 	return (milliseconds);
 }

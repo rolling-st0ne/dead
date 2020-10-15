@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 23:14:47 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/14 00:35:28 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/16 01:19:38 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,27 @@
 
 # define STD_OUT 1
 # define SUCCESS 0
-# define FAIL -1
+# define IS_FREE 1
+# define IS_BUSY 0
 # define ETERNITY_OF_PAINFUL_EXISTANCE 1
 
 typedef enum		e_errors
 {
-	BAD_ARGS = 1
+	FAIL = -1,
+	BAD_ARGS = 1,
+	MALLOC,
+	TIME,
+	MUTEX_INIT,
+	THREAD_INIT,
+	THREAD_JOIN
 }					t_errors;
+
+typedef struct		s_fork
+{
+	int				index;
+	short int		status;
+	pthread_mutex_t	mutex;
+}					t_fork;
 
 typedef struct		s_args
 {
@@ -37,32 +51,29 @@ typedef struct		s_args
 	size_t			number_of_times_each_philosopher_must_eat;
 }					t_args;
 
-typedef struct		s_philosopher
-{
-	pthread_t		id;
-	pthread_mutex_t	mutex;
-	int				index;
-	int				err_status;
-}					t_philosopher;
-
 typedef struct		s_params
 {
 	t_args			args;
-	size_t			forks;
+	t_fork			**forks;
 	long long		s_time;
 }					t_params;
+
+typedef struct		s_philosopher
+{
+	pthread_t		id;
+	int				index;
+	int				err_status;
+	t_fork			*left_hand;
+	t_fork			*right_hand;
+	t_params		*params;
+	size_t			eat_times;
+}					t_philosopher;
 
 typedef struct		s_philosophers
 {
 	t_params		params;
 	t_philosopher	**philosophers;
 }					t_philosophers;
-
-typedef struct		s_thread_info
-{
-	t_philosopher	**philo;
-	t_params		*params;
-}					t_thread_info;
 
 int					philo_one(int argc, char **argv);
 int					print_error(t_errors error);
@@ -73,5 +84,8 @@ int					start(t_philosophers *p);
 long long			get_time(void);
 int					wait_till_death(t_philosophers *p);
 void				*vicious_circle(void *arg);
+int					set_forks(t_philosophers *p);
+void				assign_forks(t_philosophers *p, int index);
+int					clean(t_philosophers *p);
 
 #endif
