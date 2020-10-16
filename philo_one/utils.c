@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 23:35:51 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/16 00:05:51 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/16 01:38:17 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,4 @@ int				ft_atoi(const char *c)
 		c++;
 	}
 	return ((int)result * sign);
-}
-
-void			ft_putstr(const char *str)
-{
-	char		*ptr;
-
-	ptr = (char *)str;
-	while (ptr && *ptr)
-		write(STD_OUT, ptr++, 1);
 }

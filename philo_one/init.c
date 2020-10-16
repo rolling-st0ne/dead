@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 00:26:57 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/16 01:19:52 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/16 01:36:41 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,5 +96,6 @@ int					init(int argc, char **argv, t_philosophers *philosophers)
 //	philosophers->params.forks = philosophers->params.args.number_of_philosophers;
 	set_forks(philosophers);
 	status = set_philosophers(philosophers);
+	pthread_mutex_init(&philosophers->params.output_mutex, NULL);
 	return (status);
 }

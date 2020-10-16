@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 23:14:47 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/16 01:19:38 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/16 01:43:39 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdio.h> // to_delete
 # include <stdlib.h>
 # include <sys/time.h>
+# include <limits.h>
 
 # define STD_OUT 1
 # define SUCCESS 0
@@ -56,6 +57,7 @@ typedef struct		s_params
 	t_args			args;
 	t_fork			**forks;
 	long long		s_time;
+	pthread_mutex_t	output_mutex;
 }					t_params;
 
 typedef struct		s_philosopher
@@ -87,5 +89,6 @@ void				*vicious_circle(void *arg);
 int					set_forks(t_philosophers *p);
 void				assign_forks(t_philosophers *p, int index);
 int					clean(t_philosophers *p);
+void				print_status(long long time, int index, char *status);
 
 #endif
