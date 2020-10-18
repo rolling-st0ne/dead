@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 17:42:07 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/18 03:14:02 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/18 03:28:41 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int			check_death(t_philosopher *phil)
 		return (TIME);
 	if (current_time - phil->eat_last_time > (long long)phil->params->args.time_to_die * 1000)
 	{
-		print_status(phil, get_proc_time(phil->params), phil->index, "died");
+//		print_status(phil, get_proc_time(phil->params), phil->index, "died");
 		return (DIED);
 	}
 	return (ALIVE);
@@ -69,7 +69,7 @@ static int			eat(t_philosopher *phil)
 	print_status(phil, get_proc_time(phil->params), phil->index, "is eating");
 	if (usleep(phil->params->args.time_to_eat * 1000))
 		return (SLEEP);
-	if ((phil->eat_last_time = get_time()))
+	if ((phil->eat_last_time = get_time()) == TIME)
 		return (TIME);
 	if ((status = pthread_mutex_unlock(&phil->right_hand->mutex)))
 		return (MUTEX_UNLOCK);
@@ -83,19 +83,24 @@ static int			eat(t_philosopher *phil)
 
 void				*vicious_circle(void *arg)
 {
-	int				status;
+	int				*status;
 	t_philosopher	*phil;
 
-	status = 0;
+	if (!(status = malloc(sizeof(int))))
+		pthread_exit(NULL);
+	*status = 0;
 	phil = (t_philosopher *)arg;
 	while (ETERNITY_OF_PAINFUL_EXISTANCE)
 	{
-		if ((status = eat(phil)))
-			pthread_exit(&status);
-		if ((status = sleeep(phil)))
-			pthread_exit(&status);
-		if ((status = repeat(phil)))
-			pthread_exit(&status);
+		if ((*status = eat(phil)))
+		{
+			printf("lol, u died %d\n", *status);
+			pthread_exit(status);
+		}
+		if ((*status = sleeep(phil)))
+			pthread_exit(status);
+		if ((*status = repeat(phil)))
+			pthread_exit(status);
 		/*
 		status = eat(phil);
 		status = sleeep(phil);

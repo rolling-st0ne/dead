@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 23:14:47 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/18 03:14:27 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/18 03:26:56 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 # define DIED 1
 # define ALIVE 0
 # define ETERNITY_OF_PAINFUL_EXISTANCE 1
+# define TRUE 1
+# define FALSE 0
 
 typedef enum		e_errors
 {
@@ -70,7 +72,7 @@ typedef struct		s_philosopher
 {
 	pthread_t		id;
 	int				index;
-	int				ret_val;
+	int				*ret_val;
 	t_fork			*left_hand;
 	t_fork			*right_hand;
 	t_params		*params;
@@ -98,5 +100,7 @@ int					set_forks(t_philosophers *p);
 void				assign_forks(t_philosophers *p, int index);
 int					clean(t_philosophers *p);
 void				print_status(t_philosopher *phil, long long time, int index, char *status);
+short int			is_error(int val);
+
 
 #endif

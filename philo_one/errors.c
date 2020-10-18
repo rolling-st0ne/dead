@@ -6,11 +6,18 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 23:26:14 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/16 18:49:22 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/18 03:23:49 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_one.h"
+
+short int	is_error(int val)
+{
+	if ((val >= BAD_ARGS && val <= SLEEP) || val == FAIL)
+		return (TRUE);
+	return (FALSE);
+}
 
 int			print_error(t_errors error)
 {
