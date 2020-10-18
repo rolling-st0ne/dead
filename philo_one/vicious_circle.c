@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 17:42:07 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/18 03:28:41 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/18 03:34:31 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int			check_death(t_philosopher *phil)
 		return (TIME);
 	if (current_time - phil->eat_last_time > (long long)phil->params->args.time_to_die * 1000)
 	{
-//		print_status(phil, get_proc_time(phil->params), phil->index, "died");
+		print_status(phil, get_proc_time(phil->params), phil->index, "died");
 		return (DIED);
 	}
 	return (ALIVE);
@@ -55,9 +55,8 @@ static int			eat(t_philosopher *phil)
 
 	status = 0;
 	while (!(phil->left_hand->status == IS_FREE && phil->right_hand->status == IS_FREE))
-		status = check_death(phil);
-	if (status)
-		return (status);
+		if ((status = check_death(phil)))
+			return (status);
 	phil->left_hand->status = IS_BUSY;
 	phil->right_hand->status = IS_BUSY;
 	if ((status = pthread_mutex_lock(&phil->left_hand->mutex)))
