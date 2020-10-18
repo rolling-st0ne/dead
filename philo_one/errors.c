@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 23:26:14 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/18 03:23:49 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/18 05:15:28 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 short int	is_error(int val)
 {
-	if ((val >= BAD_ARGS && val <= SLEEP) || val == FAIL)
+	if ((val >= BAD_ARGS && val <= SLEEP) || val == FAIL) // do i need it?
 		return (TRUE);
 	return (FALSE);
 }
@@ -35,7 +35,5 @@ int			print_error(t_errors error)
 		ft_putstr("Error.\nMutex lock failed.\n");
 	else if (error == MUTEX_UNLOCK)
 		ft_putstr("Error.\nMutex unlock failed.\n");
-	else
-		print_error(FAIL);
 	return (error);
 }

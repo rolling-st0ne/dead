@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 17:42:07 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/18 03:34:31 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/18 05:40:27 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int			check_death(t_philosopher *phil)
 	current_time = get_time();
 	if (current_time == TIME)
 		return (TIME);
-	if (current_time - phil->eat_last_time > (long long)phil->params->args.time_to_die * 1000)
+	if (current_time - phil->eat_last_time > (long long)phil->params->args.time_to_die)
 	{
 		print_status(phil, get_proc_time(phil->params), phil->index, "died");
 		return (DIED);
@@ -66,10 +66,10 @@ static int			eat(t_philosopher *phil)
 	print_status(phil, get_proc_time(phil->params), phil->index, "has taken a fork");
 	print_status(phil, get_proc_time(phil->params), phil->index, "has taken a fork");
 	print_status(phil, get_proc_time(phil->params), phil->index, "is eating");
-	if (usleep(phil->params->args.time_to_eat * 1000))
-		return (SLEEP);
 	if ((phil->eat_last_time = get_time()) == TIME)
 		return (TIME);
+	if (usleep(phil->params->args.time_to_eat * 1000))
+		return (SLEEP);
 	if ((status = pthread_mutex_unlock(&phil->right_hand->mutex)))
 		return (MUTEX_UNLOCK);
 	if ((status = pthread_mutex_unlock(&phil->left_hand->mutex)))
@@ -82,30 +82,23 @@ static int			eat(t_philosopher *phil)
 
 void				*vicious_circle(void *arg)
 {
-	int				*status;
 	t_philosopher	*phil;
 
-	if (!(status = malloc(sizeof(int))))
-		pthread_exit(NULL);
-	*status = 0;
 	phil = (t_philosopher *)arg;
+	phil->ret_val = 0;
+	if ((phil->eat_last_time = get_time()) == TIME)
+	{
+		phil->ret_val = TIME;
+		pthread_exit(NULL);
+	}
 	while (ETERNITY_OF_PAINFUL_EXISTANCE)
 	{
-		if ((*status = eat(phil)))
-		{
-			printf("lol, u died %d\n", *status);
-			pthread_exit(status);
-		}
-		if ((*status = sleeep(phil)))
-			pthread_exit(status);
-		if ((*status = repeat(phil)))
-			pthread_exit(status);
-		/*
-		status = eat(phil);
-		status = sleeep(phil);
-		status = repeat(phil);
-		*/
+		if ((phil->ret_val = eat(phil)))
+			pthread_exit(NULL);
+		if ((phil->ret_val = sleeep(phil)))
+			pthread_exit(NULL);
+		if ((phil->ret_val = repeat(phil)))
+			pthread_exit(NULL);
 	}
-	pthread_exit(NULL);
 	return (NULL);
 } // to set status return

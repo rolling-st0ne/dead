@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 23:18:44 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/18 04:04:12 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/18 05:38:49 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,13 @@ int						wait_till_death(t_philosophers *p)
 
 	index = 0;
 	status = 0;
-	while (index < p->params.args.number_of_philosophers)
+	while (ETERNITY_OF_PAINFUL_EXISTANCE)
 	{
 		philosopher = p->philosophers[index++];
-		status = pthread_join(philosopher->id, (void **)&philosopher->ret_val);
-		if (status)
-			return (THREAD_JOIN);
-		if (philosopher->ret_val == NULL)
-			return (MALLOC);
-		else if (is_error(*philosopher->ret_val))
-			return (*philosopher->ret_val);
+		if (philosopher->ret_val)
+			return (philosopher->ret_val);
+		if (index == p->params.args.number_of_philosophers)
+			index = 0;
 	}
 	return (status);
 }
@@ -73,4 +70,4 @@ int						main(int argc, char **argv) // helgrind
 	return (exec_failed ? print_error(exec_failed) : SUCCESS); //do i actualy need index in forks?
 }
 
-// work with err_status in t_philosopher
+// seg fault if bad args (in clean)

@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 23:14:47 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/18 04:04:04 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/18 04:07:11 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ typedef enum		e_errors
 	TIME,
 	MUTEX_INIT,
 	THREAD_INIT,
-	THREAD_JOIN,
+	THREAD_JOIN, //
 	MUTEX_LOCK,
 	MUTEX_UNLOCK,
 	SLEEP
@@ -72,7 +72,7 @@ typedef struct		s_philosopher
 {
 	pthread_t		id;
 	int				index;
-	int				*ret_val; //
+	int				ret_val; //
 	t_fork			*left_hand;
 	t_fork			*right_hand;
 	t_params		*params;
