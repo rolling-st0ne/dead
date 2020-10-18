@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vicious_circle.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 17:42:07 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/18 05:40:27 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/18 20:20:29 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 static int			check_death(t_philosopher *phil)
 {
-	long long		current_time;
+	struct timeval	current_time;
 
-	current_time = get_time();
-	if (current_time == TIME)
+	if ((gettimeofday(&current_time, NULL)))
 		return (TIME);
-	if (current_time - phil->eat_last_time > (long long)phil->params->args.time_to_die)
+//	printf("diff: %zu\n", cast_time(&current_time) - cast_time(&phil->eat_last_time));
+	if (cast_time(&current_time) - cast_time(&phil->eat_last_time) > phil->params->args.time_to_die)
 	{
 		print_status(phil, get_proc_time(phil->params), phil->index, "died");
 		return (DIED);
@@ -52,21 +52,23 @@ static int			sleeep(t_philosopher *phil)
 static int			eat(t_philosopher *phil)
 {
 	int				status;
+	size_t			current_time;
 
 	status = 0;
-	while (!(phil->left_hand->status == IS_FREE && phil->right_hand->status == IS_FREE))
-		if ((status = check_death(phil)))
-			return (status);
+	while (!(phil->left_hand->status == IS_FREE && phil->right_hand->status == IS_FREE)); //
+	if ((status = check_death(phil)))
+		return (status);
 	phil->left_hand->status = IS_BUSY;
 	phil->right_hand->status = IS_BUSY;
 	if ((status = pthread_mutex_lock(&phil->left_hand->mutex)))
 		return (MUTEX_LOCK);
 	if ((status = pthread_mutex_lock(&phil->right_hand->mutex)))
 		return (MUTEX_LOCK);
-	print_status(phil, get_proc_time(phil->params), phil->index, "has taken a fork");
-	print_status(phil, get_proc_time(phil->params), phil->index, "has taken a fork");
-	print_status(phil, get_proc_time(phil->params), phil->index, "is eating");
-	if ((phil->eat_last_time = get_time()) == TIME)
+	current_time = get_proc_time(phil->params);
+	print_status(phil, current_time, phil->index, "has taken a fork");
+	print_status(phil, current_time, phil->index, "has taken a fork");
+	print_status(phil, current_time, phil->index, "is eating");
+	if (gettimeofday(&phil->eat_last_time, NULL))
 		return (TIME);
 	if (usleep(phil->params->args.time_to_eat * 1000))
 		return (SLEEP);
@@ -86,7 +88,7 @@ void				*vicious_circle(void *arg)
 
 	phil = (t_philosopher *)arg;
 	phil->ret_val = 0;
-	if ((phil->eat_last_time = get_time()) == TIME)
+	if (gettimeofday(&phil->eat_last_time, NULL))
 	{
 		phil->ret_val = TIME;
 		pthread_exit(NULL);

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+         #
+#    By: casteria <casteria@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/08 23:14:28 by casteria          #+#    #+#              #
-#    Updated: 2020/10/16 20:25:34 by casteria         ###   ########.fr        #
+#    Updated: 2020/10/18 16:19:22 by casteria         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ SRCS =	main.c errors.c utils.c init.c vicious_circle.c clean.c init_utils.c \
 		output.c
 OBJS = $(SRCS:.c=.o)
 CC = clang
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 LIB = -lpthread
 RM = rm -rf
 

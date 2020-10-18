@@ -3,32 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 23:35:51 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/18 02:04:57 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/18 16:53:47 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_one.h"
 
-long long		get_time(void)
+size_t			cast_time(struct timeval *tv)
 {
-	long long		milliseconds;
-	struct timeval	tv;
-	int				status;
-
-	status = 0;
-	status = gettimeofday(&tv, NULL);
-	if (status)
-		return (TIME);
-	milliseconds = tv.tv_sec * 1000 + tv.tv_usec / 1000;
+	size_t		milliseconds;
+	milliseconds = (size_t)(tv->tv_sec * 1000 + tv->tv_usec / 1000);
 	return (milliseconds);
 }
 
-long long		get_proc_time(t_params *params)
+size_t			get_proc_time(t_params *params)
 {
-	return (get_time() - params->s_time);
+	struct timeval	current_time;
+
+	if (gettimeofday(&current_time, NULL))
+		return (TIME);
+	return (cast_time(&current_time) - cast_time(&params->s_time));
 }
 
 static int		ft_isdigit(int c)
