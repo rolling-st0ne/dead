@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 23:35:51 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/16 01:38:17 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/18 02:04:57 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ long long		get_time(void)
 		return (TIME);
 	milliseconds = tv.tv_sec * 1000 + tv.tv_usec / 1000;
 	return (milliseconds);
+}
+
+long long		get_proc_time(t_params *params)
+{
+	return (get_time() - params->s_time);
 }
 
 static int		ft_isdigit(int c)

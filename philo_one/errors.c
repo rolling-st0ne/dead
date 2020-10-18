@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 23:26:14 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/16 00:12:18 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/16 18:49:22 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,11 @@ int			print_error(t_errors error)
 		ft_putstr("Error.\nMutex init failed.\n");
 	else if (error == TIME)
 		ft_putstr("Error.\nTime get failed.\n");
+	else if (error == MUTEX_LOCK)
+		ft_putstr("Error.\nMutex lock failed.\n");
+	else if (error == MUTEX_UNLOCK)
+		ft_putstr("Error.\nMutex unlock failed.\n");
 	else
 		print_error(FAIL);
-	
 	return (error);
 }

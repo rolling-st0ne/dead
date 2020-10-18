@@ -6,13 +6,14 @@
 #    By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/08 23:14:28 by casteria          #+#    #+#              #
-#    Updated: 2020/10/16 00:17:50 by casteria         ###   ########.fr        #
+#    Updated: 2020/10/16 20:25:34 by casteria         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo_one
 HEADER = philo_one.h
-SRCS = main.c errors.c utils.c init.c vicious_circle.c clean.c init_utils.c
+SRCS =	main.c errors.c utils.c init.c vicious_circle.c clean.c init_utils.c \
+		output.c
 OBJS = $(SRCS:.c=.o)
 CC = clang
 CFLAGS = -Wall -Wextra -Werror

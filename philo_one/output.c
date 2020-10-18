@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/16 01:37:59 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/16 01:44:52 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/18 02:43:49 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,15 @@ static void			ft_putnbr(int n)
 	}
 }
 
-void				print_status(long long time, int index, char *status)
+void				print_status(t_philosopher *phil, long long time, int index, char *status)
 {
 	// to lock mutex that's already exists
+	pthread_mutex_lock(&phil->params->output_mutex);
 	ft_putnbr(time);
 	ft_putchar(' ');
 	ft_putnbr(index);
 	ft_putchar(' ');
 	ft_putstr((const char *)status);
+	ft_putchar('\n');
+	pthread_mutex_unlock(&phil->params->output_mutex);//check how its worked
 }

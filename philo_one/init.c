@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 00:26:57 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/16 01:36:41 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/18 03:11:46 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ static int			get_data(int argc, char **argv, \
 		return (status);
 	philosophers->params.args.number_of_philosophers = ft_atoi(argv[1]);
 	philosophers->params.args.time_to_die = ft_atoi(argv[2]);
-	philosophers->params.args.time_to_sleep = ft_atoi(argv[3]);
+	philosophers->params.args.time_to_eat = ft_atoi(argv[3]);
+	philosophers->params.args.time_to_sleep = ft_atoi(argv[4]);
 	if (argv[4])
 		philosophers->params.args.number_of_times_each_philosopher_must_eat = \
 			ft_atoi(argv[4]);
@@ -58,6 +59,7 @@ static int			create_philosopher(t_philosophers *p, int index)
 	// (*philosopher)->err_status = malloc(sizeof(int));
 	if (*phil == NULL)
 		return (MALLOC);
+	(*phil)->params = &p->params;
 	(*phil)->index = ++index;
 	assign_forks(p, index);
 	(*phil)->eat_times = 0;
@@ -96,6 +98,6 @@ int					init(int argc, char **argv, t_philosophers *philosophers)
 //	philosophers->params.forks = philosophers->params.args.number_of_philosophers;
 	set_forks(philosophers);
 	status = set_philosophers(philosophers);
-	pthread_mutex_init(&philosophers->params.output_mutex, NULL);
+	pthread_mutex_init(&philosophers->params.output_mutex, NULL); // output mutex
 	return (status);
 }

@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 23:18:44 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/16 01:07:04 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/18 03:13:42 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ int						wait_till_death(t_philosophers *p)
 	while (index < p->params.args.number_of_philosophers)
 	{
 		philosopher = p->philosophers[index++];
-		status = pthread_join(philosopher->id, (void**)&philosopher->err_status);
+		status = pthread_join(philosopher->id, (void **)&philosopher->ret_val);
+	//	printf("err_status: %d\n", *philosopher->ret_val);
 		if (status)
 			return (THREAD_JOIN);
 	}
