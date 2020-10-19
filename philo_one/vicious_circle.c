@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 17:42:07 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/18 05:40:27 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/19 01:40:50 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,30 +52,25 @@ static int			sleeep(t_philosopher *phil)
 static int			eat(t_philosopher *phil)
 {
 	int				status;
+	long long		time;
 
 	status = 0;
-	while (!(phil->left_hand->status == IS_FREE && phil->right_hand->status == IS_FREE))
-		if ((status = check_death(phil)))
-			return (status);
-	phil->left_hand->status = IS_BUSY;
-	phil->right_hand->status = IS_BUSY;
-	if ((status = pthread_mutex_lock(&phil->left_hand->mutex)))
+	if (pthread_mutex_lock(&phil->left_hand->mutex))
 		return (MUTEX_LOCK);
-	if ((status = pthread_mutex_lock(&phil->right_hand->mutex)))
+	if (pthread_mutex_lock(&phil->right_hand->mutex))
 		return (MUTEX_LOCK);
-	print_status(phil, get_proc_time(phil->params), phil->index, "has taken a fork");
-	print_status(phil, get_proc_time(phil->params), phil->index, "has taken a fork");
-	print_status(phil, get_proc_time(phil->params), phil->index, "is eating");
+	time = get_proc_time(phil->params);
+	print_status(phil, time, phil->index, "has taken a fork");
+	print_status(phil, time, phil->index, "has taken a fork");
+	print_status(phil, time, phil->index, "is eating");
 	if ((phil->eat_last_time = get_time()) == TIME)
 		return (TIME);
 	if (usleep(phil->params->args.time_to_eat * 1000))
 		return (SLEEP);
-	if ((status = pthread_mutex_unlock(&phil->right_hand->mutex)))
+	if (pthread_mutex_unlock(&phil->left_hand->mutex))
 		return (MUTEX_UNLOCK);
-	if ((status = pthread_mutex_unlock(&phil->left_hand->mutex)))
+	if (pthread_mutex_unlock(&phil->right_hand->mutex))
 		return (MUTEX_UNLOCK);
-	phil->left_hand->status = IS_FREE;
-	phil->right_hand->status = IS_FREE;	
  // check how much philosopher eat
 	return (status);
 }

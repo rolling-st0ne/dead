@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 23:51:16 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/16 01:36:05 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/18 23:27:09 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,14 @@ void				assign_forks(t_philosophers *p, int index)
 		phil->left_hand = p->params.forks[count - 1];
 		phil->right_hand = p->params.forks[0];
 	}
+	else if (index == (int)p->params.args.number_of_philosophers)
+	{
+		phil->left_hand = p->params.forks[index - 1];
+		phil->right_hand = p->params.forks[0];
+	}
 	else
 	{
-		phil->left_hand = p->params.forks[count - 2];
-		phil->right_hand = p->params.forks[count - 1];
+		phil->left_hand = p->params.forks[index - 2];
+		phil->right_hand = p->params.forks[index - 1];
 	}
 }

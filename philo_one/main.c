@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 23:18:44 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/18 05:38:49 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/18 05:47:39 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,4 @@ int						main(int argc, char **argv) // helgrind
 	clean(&philosophers);
 	return (exec_failed ? print_error(exec_failed) : SUCCESS); //do i actualy need index in forks?
 }
-
 // seg fault if bad args (in clean)
