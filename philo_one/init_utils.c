@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 23:51:16 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/18 23:27:09 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/19 19:19:22 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,6 @@ void				assign_forks(t_philosophers *p, int index)
 	if (index == 1)
 	{
 		phil->left_hand = p->params.forks[count - 1];
-		phil->right_hand = p->params.forks[0];
-	}
-	else if (index == (int)p->params.args.number_of_philosophers)
-	{
-		phil->left_hand = p->params.forks[index - 1];
 		phil->right_hand = p->params.forks[0];
 	}
 	else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vicious_circle.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 17:42:07 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/19 01:40:50 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/19 19:10:34 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,9 @@ static int			eat(t_philosopher *phil)
 		return (TIME);
 	if (usleep(phil->params->args.time_to_eat * 1000))
 		return (SLEEP);
-	if (pthread_mutex_unlock(&phil->left_hand->mutex))
-		return (MUTEX_UNLOCK);
 	if (pthread_mutex_unlock(&phil->right_hand->mutex))
+		return (MUTEX_UNLOCK);
+	if (pthread_mutex_unlock(&phil->left_hand->mutex))
 		return (MUTEX_UNLOCK);
  // check how much philosopher eat
 	return (status);
