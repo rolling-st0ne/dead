@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vicious_circle.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 17:42:07 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/19 21:05:56 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/19 23:25:06 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int			check_death(t_philosopher *phil)
 {
 	long long		current_time;
 
-	current_time = get_time();
+	current_time = phil->thread_time;
 	if (current_time == TIME)
 		return (TIME);
 	if (current_time - phil->eat_last_time > (long long)phil->params->args.time_to_die)
@@ -46,26 +46,30 @@ static int			sleeep(t_philosopher *phil)
 	status = 0;
 	print_status(phil, get_proc_time(phil->params), phil->index, "is sleeping");
 	status = usleep(phil->params->args.time_to_sleep * 1000);
+	phil->thread_time = get_proc_time(phil->params);
 	return (status);
 }
 
 static int			eat(t_philosopher *phil)
 {
 	int				status;
-	long long		time;
 	status = 0;
+
 	if (pthread_mutex_lock(&phil->left_hand->mutex))
 		return (MUTEX_LOCK);
 	if (pthread_mutex_lock(&phil->right_hand->mutex))
 		return (MUTEX_LOCK); // check death here
-	time = get_proc_time(phil->params);
-	print_status(phil, time, phil->index, "has taken a fork");
-	print_status(phil, time, phil->index, "has taken a fork");
-	print_status(phil, time, phil->index, "is eating");
-	if ((phil->eat_last_time = get_time()) == TIME)
+	phil->thread_time = get_proc_time(phil->params);
+	if (check_death(phil))
+		return (DIED);
+	print_status(phil, phil->thread_time, phil->index, "has taken a fork");
+	print_status(phil, phil->thread_time, phil->index, "has taken a fork");
+	print_status(phil, phil->thread_time, phil->index, "is eating");
+	if ((phil->eat_last_time = phil->thread_time) == TIME)
 		return (TIME);
 	if (usleep(phil->params->args.time_to_eat * 1000))
 		return (SLEEP);
+	phil->thread_time = get_proc_time(phil->params);
 	if (pthread_mutex_unlock(&phil->right_hand->mutex))
 		return (MUTEX_UNLOCK);
 	if (pthread_mutex_unlock(&phil->left_hand->mutex))

@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 00:26:57 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/18 05:07:44 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/19 23:00:55 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ static int			create_philosopher(t_philosophers *p, int index)
 	(*phil)->params = &p->params;
 	(*phil)->index = ++index;
 	(*phil)->ret_val = 0;
+	(*phil)->thread_time = 0;
 	assign_forks(p, index);
 	(*phil)->eat_times = 0;
 	return (SUCCESS);
