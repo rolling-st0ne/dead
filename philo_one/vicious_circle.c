@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vicious_circle.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 17:42:07 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/19 23:25:06 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/22 21:07:13 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 static int			check_death(t_philosopher *phil)
 {
-	long long		current_time;
+	size_t			time;
 
-	current_time = phil->thread_time;
-	if (current_time == TIME)
-		return (TIME);
-	if (current_time - phil->eat_last_time > (long long)phil->params->args.time_to_die)
+	
+	time = (size_t)((phil->thread_time.tv_sec - phil->eat_last_time.tv_sec) * 1000
+				+ (phil->thread_time.tv_usec - phil->eat_last_time.tv_usec) * 0.001);
+	if (time > phil->params->args.time_to_die)
 	{
-		print_status(phil, get_proc_time(phil->params), phil->index, "died");
+		print_status(phil, phil->thread_time, phil->index, "died");
 		return (DIED);
 	}
 	return (ALIVE);
@@ -35,7 +35,9 @@ static int			repeat(t_philosopher *phil)
 	status = check_death(phil);
 	if (status)
 		return (status);
-	print_status(phil, get_proc_time(phil->params), phil->index, "is thinking");
+	if (gettimeofday(&phil->thread_time, NULL))
+		return (TIME);
+	print_status(phil, phil->thread_time, phil->index, "is thinking");
 	return (status);
 }
 
@@ -44,9 +46,10 @@ static int			sleeep(t_philosopher *phil)
 	int				status;
 
 	status = 0;
-	print_status(phil, get_proc_time(phil->params), phil->index, "is sleeping");
+	if (gettimeofday(&phil->thread_time, NULL))
+		return (TIME);
+	print_status(phil, phil->thread_time, phil->index, "is sleeping");
 	status = usleep(phil->params->args.time_to_sleep * 1000);
-	phil->thread_time = get_proc_time(phil->params);
 	return (status);
 }
 
@@ -58,18 +61,18 @@ static int			eat(t_philosopher *phil)
 	if (pthread_mutex_lock(&phil->left_hand->mutex))
 		return (MUTEX_LOCK);
 	if (pthread_mutex_lock(&phil->right_hand->mutex))
-		return (MUTEX_LOCK); // check death here
-	phil->thread_time = get_proc_time(phil->params);
+		return (MUTEX_LOCK);
+	if (gettimeofday(&phil->thread_time, NULL))
+		return (TIME);
 	if (check_death(phil))
 		return (DIED);
 	print_status(phil, phil->thread_time, phil->index, "has taken a fork");
 	print_status(phil, phil->thread_time, phil->index, "has taken a fork");
 	print_status(phil, phil->thread_time, phil->index, "is eating");
-	if ((phil->eat_last_time = phil->thread_time) == TIME)
+	if (gettimeofday(&phil->eat_last_time, NULL))
 		return (TIME);
 	if (usleep(phil->params->args.time_to_eat * 1000))
 		return (SLEEP);
-	phil->thread_time = get_proc_time(phil->params);
 	if (pthread_mutex_unlock(&phil->right_hand->mutex))
 		return (MUTEX_UNLOCK);
 	if (pthread_mutex_unlock(&phil->left_hand->mutex))
@@ -84,7 +87,7 @@ void				*vicious_circle(void *arg)
 
 	phil = (t_philosopher *)arg;
 	phil->ret_val = 0;
-	if ((phil->eat_last_time = get_time()) == TIME)
+	if (gettimeofday(&phil->eat_last_time, NULL))
 	{
 		phil->ret_val = TIME;
 		pthread_exit(NULL);

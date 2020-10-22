@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 00:26:57 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/19 23:00:55 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/22 18:46:49 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ static int			create_philosopher(t_philosophers *p, int index)
 	(*phil)->params = &p->params;
 	(*phil)->index = ++index;
 	(*phil)->ret_val = 0;
-	(*phil)->thread_time = 0;
 	assign_forks(p, index);
 	(*phil)->eat_times = 0;
 	return (SUCCESS);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   output.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/16 01:37:59 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/18 02:43:49 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/22 21:06:17 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,18 @@ static void			ft_putnbr(int n)
 	}
 }
 
-void				print_status(t_philosopher *phil, long long time, int index, char *status)
+void				print_status(t_philosopher *phil, struct timeval time, int index, char *status)
 {
-	// to lock mutex that's already exists
+	size_t			current_time;
+
 	pthread_mutex_lock(&phil->params->output_mutex);
-	ft_putnbr(time);
+	current_time = (size_t)((time.tv_sec - phil->params->s_time.tv_sec) * 1000
+				+ (time.tv_usec - phil->params->s_time.tv_usec) * 0.001);
+	ft_putnbr(current_time);
 	ft_putchar(' ');
 	ft_putnbr(index);
 	ft_putchar(' ');
 	ft_putstr((const char *)status);
 	ft_putchar('\n');
-	pthread_mutex_unlock(&phil->params->output_mutex);//check how its worked
+	pthread_mutex_unlock(&phil->params->output_mutex);
 }

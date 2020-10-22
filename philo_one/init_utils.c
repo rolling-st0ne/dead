@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 23:51:16 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/19 19:19:22 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/22 18:47:02 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ static int			create_fork(t_fork **fork, int index)
 	if (!(*fork))
 		return (MALLOC);
 	(*fork)->index = index;
-	(*fork)->status = IS_FREE;
 	status = pthread_mutex_init(&(*fork)->mutex, NULL);
 	if (status)
 		return (MUTEX_INIT);

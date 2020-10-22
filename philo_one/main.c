@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 23:18:44 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/18 05:47:39 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/22 19:41:17 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ int						start(t_philosophers *p)
 
 	index = 0;
 	status = 0;
-	p->params.s_time = get_time();
-	if (p->params.s_time == TIME)
+	status = gettimeofday(&p->params.s_time, NULL);
+	if (status)
 		return (TIME);
 	while (index < p->params.args.number_of_philosophers)
 	{
