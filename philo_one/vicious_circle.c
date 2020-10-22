@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 17:42:07 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/22 21:07:13 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/22 22:05:59 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,6 @@ static int			sleeep(t_philosopher *phil)
 
 static int			eat(t_philosopher *phil)
 {
-	int				status;
-	status = 0;
-
 	if (pthread_mutex_lock(&phil->left_hand->mutex))
 		return (MUTEX_LOCK);
 	if (pthread_mutex_lock(&phil->right_hand->mutex))
@@ -77,8 +74,9 @@ static int			eat(t_philosopher *phil)
 		return (MUTEX_UNLOCK);
 	if (pthread_mutex_unlock(&phil->left_hand->mutex))
 		return (MUTEX_UNLOCK);
- // check how much philosopher eat
-	return (status);
+	if (++phil->eaten == phil->params->args.number_of_times_each_philosopher_must_eat)
+		return (FULL);
+	return (SUCCESS);
 }
 
 void				*vicious_circle(void *arg)

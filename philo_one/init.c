@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 00:26:57 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/22 18:46:49 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/22 22:05:48 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int			get_data(int argc, char **argv, \
 	philosophers->params.args.time_to_sleep = ft_atoi(argv[4]);
 	if (argv[4])
 		philosophers->params.args.number_of_times_each_philosopher_must_eat = \
-			ft_atoi(argv[4]);
+			ft_atoi(argv[5]);
 	else
 		philosophers->params.args.number_of_times_each_philosopher_must_eat = -1;
 	return (status);
@@ -62,6 +62,7 @@ static int			create_philosopher(t_philosophers *p, int index)
 	(*phil)->params = &p->params;
 	(*phil)->index = ++index;
 	(*phil)->ret_val = 0;
+	(*phil)->eaten = 0;
 	assign_forks(p, index);
 	(*phil)->eat_times = 0;
 	return (SUCCESS);
@@ -93,6 +94,8 @@ int					init(int argc, char **argv, t_philosophers *philosophers)
 {
 	int				status;
 
+	philosophers->philosophers = NULL;
+	philosophers->params.forks = NULL;
 	status = get_data(argc, argv, philosophers);
 	if (status)
 		return (status);

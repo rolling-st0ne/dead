@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 23:14:47 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/22 18:52:43 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/22 22:11:06 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,18 @@
 # define SUCCESS 0
 # define IS_FREE 1
 # define IS_BUSY 0
+# define FULL 2
 # define DIED 1
 # define ALIVE 0
 # define ETERNITY_OF_PAINFUL_EXISTANCE 1
 # define TRUE 1
 # define FALSE 0
 
+
 typedef enum		e_errors
 {
 	FAIL = -1,
-	BAD_ARGS = 2,
+	BAD_ARGS = 3,
 	MALLOC,
 	TIME,
 	MUTEX_INIT,
@@ -75,6 +77,7 @@ typedef struct		s_philosopher
 	t_fork			*left_hand;
 	t_fork			*right_hand;
 	t_params		*params;
+	size_t			eaten;
 	struct timeval	eat_last_time;
 	struct timeval	thread_time;
 	size_t			eat_times;
