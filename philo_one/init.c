@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 00:26:57 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/22 22:05:48 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/22 22:17:32 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int			get_data(int argc, char **argv, \
 	philosophers->params.args.time_to_die = ft_atoi(argv[2]);
 	philosophers->params.args.time_to_eat = ft_atoi(argv[3]);
 	philosophers->params.args.time_to_sleep = ft_atoi(argv[4]);
-	if (argv[4])
+	if (argv[5])
 		philosophers->params.args.number_of_times_each_philosopher_must_eat = \
 			ft_atoi(argv[5]);
 	else

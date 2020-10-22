@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 23:14:47 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/22 22:11:06 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/22 22:19:49 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ typedef struct		s_args
 	size_t			time_to_die;
 	size_t			time_to_eat;
 	size_t			time_to_sleep;
-	size_t			number_of_times_each_philosopher_must_eat;
+	int				number_of_times_each_philosopher_must_eat;
 }					t_args;
 
 typedef struct		s_params
@@ -77,7 +77,7 @@ typedef struct		s_philosopher
 	t_fork			*left_hand;
 	t_fork			*right_hand;
 	t_params		*params;
-	size_t			eaten;
+	int				eaten;
 	struct timeval	eat_last_time;
 	struct timeval	thread_time;
 	size_t			eat_times;
