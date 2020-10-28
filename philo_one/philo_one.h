@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 23:14:47 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/28 19:02:00 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/28 19:59:49 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include "pthread.h"
 # include <unistd.h>
-# include <stdio.h> // to_delete
 # include <stdlib.h>
 # include <sys/time.h>
 # include <limits.h>
@@ -31,7 +30,6 @@
 # define TRUE 1
 # define FALSE 0
 
-
 typedef enum		e_errors
 {
 	FAIL = -1,
@@ -40,7 +38,7 @@ typedef enum		e_errors
 	TIME,
 	MUTEX_INIT,
 	THREAD_INIT,
-	THREAD_JOIN, //
+	THREAD_JOIN,
 	MUTEX_LOCK,
 	MUTEX_UNLOCK,
 	SLEEP
@@ -102,7 +100,8 @@ void				*vicious_circle(void *arg);
 int					set_forks(t_philosophers *p);
 void				assign_forks(t_philosophers *p, int index);
 int					clean(t_philosophers *p);
-void				print_status(t_philosopher *phil, struct timeval time, int index, char *status);
+void				print_status(t_philosopher *phil, struct timeval \
+												time, int index, char *status);
 short int			is_error(int val);
 
 #endif

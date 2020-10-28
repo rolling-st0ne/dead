@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/16 01:37:59 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/28 17:23:40 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/28 20:02:09 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static void			ft_putchar(char c)
 {
 	write(STD_OUT, &c, 1);
 }
-
 
 void				ft_putstr(const char *str)
 {
@@ -51,16 +50,17 @@ static void			ft_putnbr(int n)
 	}
 }
 
-void				print_status(t_philosopher *phil, struct timeval time, int index, char *status)
+void				print_status(t_philosopher *phil, struct timeval time, \
+													int index, char *status)
 {
-	size_t			current_time;
+	size_t			cur;
 
 	if (!phil->params->stop_sign)
 	{
 		pthread_mutex_lock(&phil->params->output_mutex);
-		current_time = (size_t)((time.tv_sec - phil->params->s_time.tv_sec) * 1000
+		cur = (size_t)((time.tv_sec - phil->params->s_time.tv_sec) * 1000
 					+ (time.tv_usec - phil->params->s_time.tv_usec) * 0.001);
-		ft_putnbr(current_time);
+		ft_putnbr(cur);
 		ft_putchar(' ');
 		ft_putnbr(index);
 		ft_putchar(' ');

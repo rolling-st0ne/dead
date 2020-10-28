@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 17:42:07 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/28 16:29:56 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/28 20:11:56 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,10 @@ static int			check_death(t_philosopher *phil)
 {
 	size_t			time;
 
-	
-	time = (size_t)((phil->thread_time.tv_sec - phil->eat_last_time.tv_sec) * 1000
-				+ (phil->thread_time.tv_usec - phil->eat_last_time.tv_usec) * 0.001);
+	time = (size_t)((phil->thread_time.tv_sec - \
+							phil->eat_last_time.tv_sec) * 1000
+				+ (phil->thread_time.tv_usec - \
+							phil->eat_last_time.tv_usec) * 0.001);
 	if (time > phil->params->args.time_to_die)
 	{
 		print_status(phil, phil->thread_time, phil->index, "died");
@@ -74,7 +75,8 @@ static int			eat(t_philosopher *phil)
 		return (MUTEX_UNLOCK);
 	if (pthread_mutex_unlock(&phil->left_hand->mutex))
 		return (MUTEX_UNLOCK);
-	if (++phil->eaten == phil->params->args.number_of_times_each_philosopher_must_eat)
+	if (++phil->eaten == \
+		phil->params->args.number_of_times_each_philosopher_must_eat)
 		return (FULL);
 	return (SUCCESS);
 }
@@ -92,17 +94,11 @@ void				*vicious_circle(void *arg)
 	}
 	while (ETERNITY_OF_PAINFUL_EXISTANCE)
 	{
-		if (phil->params->stop_sign)
-			break;
-		if ((phil->ret_val = eat(phil)))
+		if ((phil->ret_val = eat(phil)) || phil->params->stop_sign)
 			pthread_exit(NULL);
-		if (phil->params->stop_sign)
-			break;
-		if ((phil->ret_val = sleeep(phil)))
+		if ((phil->ret_val = sleeep(phil)) || phil->params->stop_sign)
 			pthread_exit(NULL);
-		if (phil->params->stop_sign)
-			break;
-		if ((phil->ret_val = repeat(phil)))
+		if ((phil->ret_val = repeat(phil)) || phil->params->stop_sign)
 			pthread_exit(NULL);
 	}
 	pthread_exit(NULL);

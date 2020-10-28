@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 23:26:14 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/18 05:15:28 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/28 19:59:16 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 short int	is_error(int val)
 {
-	if ((val >= BAD_ARGS && val <= SLEEP) || val == FAIL) // do i need it?
+	if ((val >= BAD_ARGS && val <= SLEEP) || val == FAIL)
 		return (TRUE);
 	return (FALSE);
 }

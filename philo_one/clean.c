@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/15 00:15:15 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/28 18:57:50 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/28 19:03:23 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ static void			free_philosophers(t_philosopher **darray)
 	index = 0;
 	while (darray[index])
 	{
-	//	if (darray[index]->err_status)
-	//	free(darray[index]->err_status);
 		free(darray[index]);
 		index++;
 	}
@@ -34,7 +32,7 @@ static void			free_forks(t_fork **forks)
 	index = 0;
 	while (forks[index])
 	{
-		pthread_mutex_destroy(&forks[index]->mutex); // still reachable leaks
+		pthread_mutex_destroy(&forks[index]->mutex);
 		free(forks[index]);
 		index++;
 	}
@@ -47,7 +45,6 @@ int					clean(t_philosophers *p)
 		free_philosophers(p->philosophers);
 	if (p->params.forks)
 		free_forks(p->params.forks);
-	pthread_mutex_destroy(&p->params.output_mutex); //return it back!
-	// CLEAN RET_VAL 
+	pthread_mutex_destroy(&p->params.output_mutex);
 	return (SUCCESS);
 }
