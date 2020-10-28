@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 23:18:44 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/22 19:41:17 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/28 18:29:45 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int						start(t_philosophers *p)
 		return (TIME);
 	while (index < p->params.args.number_of_philosophers)
 	{
+		if (usleep(10))
+			return (TIME);
 		phil = p->philosophers[index];
 		status = pthread_create(&p->philosophers[index]->id, NULL, vicious_circle, phil);
 		if (status)
@@ -46,7 +48,10 @@ int						wait_till_death(t_philosophers *p)
 	{
 		philosopher = p->philosophers[index++];
 		if (philosopher->ret_val)
+		{
+			p->params.stop_sign = 1;
 			return (philosopher->ret_val);
+		}
 		if (index == p->params.args.number_of_philosophers)
 			index = 0;
 	}
@@ -66,6 +71,7 @@ int						main(int argc, char **argv) // helgrind
 	if (exec_failed)
 		return (print_error(exec_failed) + clean(&philosophers));
 	exec_failed = wait_till_death(&philosophers);
+	exec_failed = usleep(100000);
 	clean(&philosophers);
 	return (exec_failed ? print_error(exec_failed) : SUCCESS); //do i actualy need index in forks?
 }

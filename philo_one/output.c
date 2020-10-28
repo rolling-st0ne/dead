@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/16 01:37:59 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/22 21:06:17 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/28 17:23:40 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,17 @@ void				print_status(t_philosopher *phil, struct timeval time, int index, char *
 {
 	size_t			current_time;
 
-	pthread_mutex_lock(&phil->params->output_mutex);
-	current_time = (size_t)((time.tv_sec - phil->params->s_time.tv_sec) * 1000
-				+ (time.tv_usec - phil->params->s_time.tv_usec) * 0.001);
-	ft_putnbr(current_time);
-	ft_putchar(' ');
-	ft_putnbr(index);
-	ft_putchar(' ');
-	ft_putstr((const char *)status);
-	ft_putchar('\n');
-	pthread_mutex_unlock(&phil->params->output_mutex);
+	if (!phil->params->stop_sign)
+	{
+		pthread_mutex_lock(&phil->params->output_mutex);
+		current_time = (size_t)((time.tv_sec - phil->params->s_time.tv_sec) * 1000
+					+ (time.tv_usec - phil->params->s_time.tv_usec) * 0.001);
+		ft_putnbr(current_time);
+		ft_putchar(' ');
+		ft_putnbr(index);
+		ft_putchar(' ');
+		ft_putstr((const char *)status);
+		ft_putchar('\n');
+		pthread_mutex_unlock(&phil->params->output_mutex);
+	}
 }

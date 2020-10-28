@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 00:26:57 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/22 22:17:32 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/22 22:37:35 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ int					init(int argc, char **argv, t_philosophers *philosophers)
 
 	philosophers->philosophers = NULL;
 	philosophers->params.forks = NULL;
+	philosophers->params.stop_sign = 0;
 	status = get_data(argc, argv, philosophers);
 	if (status)
 		return (status);

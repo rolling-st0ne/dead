@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 23:14:47 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/22 22:19:49 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/28 17:12:24 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef struct		s_params
 	t_fork			**forks;
 	struct timeval	s_time;
 	pthread_mutex_t	output_mutex;
+	short int		stop_sign;
 }					t_params;
 
 typedef struct		s_philosopher

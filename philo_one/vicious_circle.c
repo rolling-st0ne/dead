@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 17:42:07 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/22 22:19:50 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/28 16:29:56 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,12 +92,19 @@ void				*vicious_circle(void *arg)
 	}
 	while (ETERNITY_OF_PAINFUL_EXISTANCE)
 	{
+		if (phil->params->stop_sign)
+			break;
 		if ((phil->ret_val = eat(phil)))
 			pthread_exit(NULL);
+		if (phil->params->stop_sign)
+			break;
 		if ((phil->ret_val = sleeep(phil)))
 			pthread_exit(NULL);
+		if (phil->params->stop_sign)
+			break;
 		if ((phil->ret_val = repeat(phil)))
 			pthread_exit(NULL);
 	}
+	pthread_exit(NULL);
 	return (NULL);
-} // to set status return
+}
