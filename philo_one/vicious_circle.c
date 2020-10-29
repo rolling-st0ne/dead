@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 17:42:07 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/29 19:56:41 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/30 00:08:53 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,6 @@ static int			check_death(t_philosopher *phil)
 	return (ALIVE);
 }
 
-static int			repeat(t_philosopher *phil)
-{
-	int				status;
-
-	status = 0;
-	status = check_death(phil);
-	if (status)
-		return (status);
-	if (gettimeofday(&phil->thread_time, NULL))
-		return (TIME);
-	print_status(phil, phil->thread_time, " is thinking\n");
-	return (status);
-}
-
 static int			sleeep(t_philosopher *phil)
 {
 	int				status;
@@ -50,7 +36,14 @@ static int			sleeep(t_philosopher *phil)
 	if (gettimeofday(&phil->thread_time, NULL))
 		return (TIME);
 	print_status(phil, phil->thread_time, " is sleeping\n");
-	status = usleep(phil->params->args.time_to_sleep * 1000);
+	if (ft_sleep(phil->params->args.time_to_sleep, phil))
+		return (TIME);
+	status = check_death(phil);
+	if (status)
+		return (status);
+	if (gettimeofday(&phil->thread_time, NULL))
+		return (TIME);
+	print_status(phil, phil->thread_time, " is thinking\n");
 	return (status);
 }
 
@@ -69,8 +62,8 @@ static int			eat(t_philosopher *phil)
 	print_status(phil, phil->thread_time, " is eating\n");
 	if (gettimeofday(&phil->eat_last_time, NULL))
 		return (TIME);
-	if (usleep(phil->params->args.time_to_eat * 1000))
-		return (SLEEP);
+	if (ft_sleep(phil->params->args.time_to_eat, phil))
+		return (TIME);
 	if (pthread_mutex_unlock(&phil->right_hand->mutex))
 		return (MUTEX_UNLOCK);
 	if (pthread_mutex_unlock(&phil->left_hand->mutex))
@@ -96,8 +89,6 @@ void				*vicious_circle(void *arg)
 			if ((phil->ret_val = eat(phil)) || phil->params->stop_sign)
 				break ;
 			if ((phil->ret_val = sleeep(phil)) || phil->params->stop_sign)
-				break ;
-			if ((phil->ret_val = repeat(phil)) || phil->params->stop_sign)
 				break ;
 		}
 	}

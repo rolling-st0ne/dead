@@ -6,11 +6,12 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 23:35:51 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/28 16:44:37 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/30 00:11:55 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_one.h"
+//#include <stdio.h> //
 
 long long		cast_time(struct timeval tv)
 {
@@ -54,4 +55,21 @@ int				ft_atoi(const char *c)
 		c++;
 	}
 	return ((int)result * sign);
+}
+
+int				ft_sleep(size_t need, t_philosopher *phil)
+{
+	struct timeval	cur;
+
+	if (gettimeofday(&cur, NULL))
+		return (TIME);
+	while (cast_time(cur) - cast_time(phil->thread_time) <= (long long)need)
+	{
+	//	printf("%lld %lld\n", cast_time(cur), cast_time(phil->thread_time));
+		if (usleep(100))
+			return (SLEEP);
+		if (gettimeofday(&cur, NULL))
+			return (TIME);
+	}
+	return (SUCCESS);
 }

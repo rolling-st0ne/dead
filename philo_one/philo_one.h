@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 23:14:47 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/29 20:06:47 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/30 00:05:52 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ void				*vicious_circle(void *arg);
 int					set_forks(t_philosophers *p);
 void				assign_forks(t_philosophers *p, int index);
 int					clean(t_philosophers *p);
+int					ft_sleep(size_t need, t_philosopher *phil);
 int					print_status(t_philosopher *phil, struct timeval time,\
 														char *status);
 short int			is_error(int val);
