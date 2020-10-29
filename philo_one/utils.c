@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 23:35:51 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/30 00:11:55 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/30 00:51:52 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_one.h"
-//#include <stdio.h> //
 
 long long		cast_time(struct timeval tv)
 {
@@ -65,7 +64,6 @@ int				ft_sleep(size_t need, t_philosopher *phil)
 		return (TIME);
 	while (cast_time(cur) - cast_time(phil->thread_time) <= (long long)need)
 	{
-	//	printf("%lld %lld\n", cast_time(cur), cast_time(phil->thread_time));
 		if (usleep(100))
 			return (SLEEP);
 		if (gettimeofday(&cur, NULL))
