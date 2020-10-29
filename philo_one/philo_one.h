@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 23:14:47 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/28 19:59:49 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/29 20:06:47 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ typedef struct		s_params
 	t_args			args;
 	t_fork			**forks;
 	struct timeval	s_time;
-	pthread_mutex_t	output_mutex;
 	short int		stop_sign;
 }					t_params;
 
@@ -100,8 +99,8 @@ void				*vicious_circle(void *arg);
 int					set_forks(t_philosophers *p);
 void				assign_forks(t_philosophers *p, int index);
 int					clean(t_philosophers *p);
-void				print_status(t_philosopher *phil, struct timeval \
-												time, int index, char *status);
+int					print_status(t_philosopher *phil, struct timeval time,\
+														char *status);
 short int			is_error(int val);
 
 #endif

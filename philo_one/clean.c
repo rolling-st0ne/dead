@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/15 00:15:15 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/28 19:03:23 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/29 20:06:34 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,5 @@ int					clean(t_philosophers *p)
 		free_philosophers(p->philosophers);
 	if (p->params.forks)
 		free_forks(p->params.forks);
-	pthread_mutex_destroy(&p->params.output_mutex);
 	return (SUCCESS);
 }

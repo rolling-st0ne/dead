@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 17:42:07 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/28 20:11:56 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/29 19:56:41 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int			check_death(t_philosopher *phil)
 							phil->eat_last_time.tv_usec) * 0.001);
 	if (time > phil->params->args.time_to_die)
 	{
-		print_status(phil, phil->thread_time, phil->index, "died");
+		print_status(phil, phil->thread_time, " died\n");
 		return (DIED);
 	}
 	return (ALIVE);
@@ -38,7 +38,7 @@ static int			repeat(t_philosopher *phil)
 		return (status);
 	if (gettimeofday(&phil->thread_time, NULL))
 		return (TIME);
-	print_status(phil, phil->thread_time, phil->index, "is thinking");
+	print_status(phil, phil->thread_time, " is thinking\n");
 	return (status);
 }
 
@@ -49,7 +49,7 @@ static int			sleeep(t_philosopher *phil)
 	status = 0;
 	if (gettimeofday(&phil->thread_time, NULL))
 		return (TIME);
-	print_status(phil, phil->thread_time, phil->index, "is sleeping");
+	print_status(phil, phil->thread_time, " is sleeping\n");
 	status = usleep(phil->params->args.time_to_sleep * 1000);
 	return (status);
 }
@@ -64,9 +64,9 @@ static int			eat(t_philosopher *phil)
 		return (TIME);
 	if (check_death(phil))
 		return (DIED);
-	print_status(phil, phil->thread_time, phil->index, "has taken a fork");
-	print_status(phil, phil->thread_time, phil->index, "has taken a fork");
-	print_status(phil, phil->thread_time, phil->index, "is eating");
+	print_status(phil, phil->thread_time, " has taken a fork\n");
+	print_status(phil, phil->thread_time, " has taken a fork\n");
+	print_status(phil, phil->thread_time, " is eating\n");
 	if (gettimeofday(&phil->eat_last_time, NULL))
 		return (TIME);
 	if (usleep(phil->params->args.time_to_eat * 1000))
@@ -88,19 +88,18 @@ void				*vicious_circle(void *arg)
 	phil = (t_philosopher *)arg;
 	phil->ret_val = 0;
 	if (gettimeofday(&phil->eat_last_time, NULL))
-	{
 		phil->ret_val = TIME;
-		pthread_exit(NULL);
-	}
-	while (ETERNITY_OF_PAINFUL_EXISTANCE)
+	else
 	{
-		if ((phil->ret_val = eat(phil)) || phil->params->stop_sign)
-			pthread_exit(NULL);
-		if ((phil->ret_val = sleeep(phil)) || phil->params->stop_sign)
-			pthread_exit(NULL);
-		if ((phil->ret_val = repeat(phil)) || phil->params->stop_sign)
-			pthread_exit(NULL);
+		while (ETERNITY_OF_PAINFUL_EXISTANCE)
+		{
+			if ((phil->ret_val = eat(phil)) || phil->params->stop_sign)
+				break ;
+			if ((phil->ret_val = sleeep(phil)) || phil->params->stop_sign)
+				break ;
+			if ((phil->ret_val = repeat(phil)) || phil->params->stop_sign)
+				break ;
+		}
 	}
-	pthread_exit(NULL);
 	return (NULL);
 }

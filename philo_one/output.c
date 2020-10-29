@@ -6,15 +6,43 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/16 01:37:59 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/28 20:02:09 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/29 20:50:54 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_one.h"
 
-static void			ft_putchar(char c)
+static int			ft_strlen(char *str)
 {
-	write(STD_OUT, &c, 1);
+	int				len;
+
+	len = 0;
+	while (str && str[len])
+		len++;
+	return (len);
+}
+
+static void			put_message(char *msg, char **ptr)
+{
+	while (*msg)
+		*(*ptr)++ = *msg++;
+}
+
+static void			put_number(size_t nbr, char **ptr)
+{
+	char			c;
+	size_t			nbr_tmp;
+	long long		pow;
+
+	pow = 10;
+	nbr_tmp = nbr;
+	while (nbr_tmp /= 10)
+		pow *= 10;
+	while ((pow /= 10))
+	{
+		c = (nbr / pow) % 10 + 48;
+		*(*ptr)++ = c;
+	}
 }
 
 void				ft_putstr(const char *str)
@@ -26,46 +54,32 @@ void				ft_putstr(const char *str)
 		write(STD_OUT, ptr++, 1);
 }
 
-static void			ft_putnbr(int n)
+int					print_status(t_philosopher *phil, struct timeval tv, \
+															char *msg)
 {
-	if (n == INT_MIN)
-	{
-		ft_putchar('-');
-		ft_putchar('2');
-		ft_putnbr(147483648);
-	}
-	else if (n < 0)
-	{
-		ft_putchar('-');
-		ft_putnbr(n * -1);
-	}
-	else if (n < 10)
-	{
-		ft_putchar((char)(n + '0'));
-	}
-	else
-	{
-		ft_putnbr(n / 10);
-		ft_putchar((char)(n % 10 + '0'));
-	}
-}
+	char			*ptr;
+	char			*log;
+	size_t			size_n;
+	long long		tmp;
+	long long		time;
 
-void				print_status(t_philosopher *phil, struct timeval time, \
-													int index, char *status)
-{
-	size_t			cur;
-
-	if (!phil->params->stop_sign)
-	{
-		pthread_mutex_lock(&phil->params->output_mutex);
-		cur = (size_t)((time.tv_sec - phil->params->s_time.tv_sec) * 1000
-					+ (time.tv_usec - phil->params->s_time.tv_usec) * 0.001);
-		ft_putnbr(cur);
-		ft_putchar(' ');
-		ft_putnbr(index);
-		ft_putchar(' ');
-		ft_putstr((const char *)status);
-		ft_putchar('\n');
-		pthread_mutex_unlock(&phil->params->output_mutex);
-	}
+	tmp = phil->index * 10;
+	size_n = 4 + ft_strlen(msg);
+	while (tmp /= 10)
+		size_n++;
+	time = ((tv.tv_sec - phil->params->s_time.tv_sec) * 1000
+			+ (tv.tv_usec - phil->params->s_time.tv_usec) * 0.001);
+	tmp = time;
+	while (tmp /= 10)
+		size_n++;
+	if (!(log = malloc(sizeof(char) * (size_n))))
+		return (MALLOC);
+	ptr = log;
+	put_number((size_t)time, &ptr);
+	put_message("ms ", &ptr);
+	put_number(phil->index, &ptr);
+	put_message(msg, &ptr);
+	write(1, log, size_n);
+	free(log);
+	return (SUCCESS);
 }
