@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_one.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 23:14:47 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/30 00:05:52 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/30 01:03:33 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ typedef struct		s_philosophers
 	t_philosopher	**philosophers;
 }					t_philosophers;
 
-int					philo_one(int argc, char **argv);
 int					print_error(t_errors error);
 void				ft_putstr(const char *str);
 int					ft_atoi(const char *c);

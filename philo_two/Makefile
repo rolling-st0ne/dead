@@ -3,16 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: casteria <casteria@student.42.fr>          +#+  +:+       +#+         #
+#    By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/08 23:14:28 by casteria          #+#    #+#              #
-#    Updated: 2020/10/08 23:47:46 by casteria         ###   ########.fr        #
+#    Updated: 2020/10/30 00:58:17 by casteria         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo_two
 HEADER = philo_two.h
-SRCS = main.c print_error.c utils.c#init.c philo.c process.c print.c clean.c utils.c
+SRCS =	main.c errors.c utils.c init.c vicious_circle.c clean.c init_utils.c \
+		output.c
 OBJS = $(SRCS:.c=.o)
 CC = clang
 CFLAGS = -Wall -Wextra -Werror
