@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 23:14:47 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/30 02:28:30 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/30 14:50:05 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ typedef struct		s_args
 typedef struct		s_params
 {
 	t_args			args;
-	sem_t			*sem;
+	sem_t			*forks;
+	sem_t			*eating;
 	struct timeval	s_time;
 	short int		stop_sign;
 }					t_params;
