@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 23:18:44 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/30 16:34:48 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/31 16:36:33 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ int						start(t_philosophers *p)
 		return (TIME);
 	while (index < p->params.args.number_of_philosophers)
 	{
-	//	if (usleep(10)) //
-	//		return (TIME);
 		phil = p->philosophers[index];
 		status = pthread_create(&p->philosophers[index]->id, \
 											NULL, vicious_circle, phil);

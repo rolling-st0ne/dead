@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   vicious_circle.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 17:42:07 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/30 16:57:01 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/31 16:38:19 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_two.h"
-#include <stdio.h> //
 
 static int			check_death(t_philosopher *phil)
 {
@@ -33,7 +32,6 @@ static int			check_death(t_philosopher *phil)
 
 static int			take_forks(t_philosopher *phil)
 {
-//	int check;
 	if (sem_wait(phil->params->eating))
 		return (SEM_WAIT);
 	if (sem_wait(phil->params->forks))
@@ -41,8 +39,6 @@ static int			take_forks(t_philosopher *phil)
 	if (check_death(phil))
 		return (DIED);
 	print_status(phil, phil->thread_time, " has taken a fork\n");
-//	sem_getvalue(phil->params->eating, &check);
-//	printf("%d\n", check);
 	if (sem_wait(phil->params->forks))
 		return (SEM_WAIT);
 	if (check_death(phil))

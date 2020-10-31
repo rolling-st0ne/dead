@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 00:26:57 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/30 16:17:19 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/31 16:38:12 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,10 +100,12 @@ int					init(int argc, char **argv, t_philosophers *philosophers)
 		return (status);
 	sem_unlink("/forks");
 	sem_unlink("/eating");
-	if (!(philosophers->params.eating = sem_open("/eating", O_CREAT | O_TRUNC | O_RDWR, S_IRWXU, \
+	if (!(philosophers->params.eating = sem_open("/eating", O_CREAT \
+	| O_TRUNC | O_RDWR, S_IRWXU, \
 	(int)(philosophers->params.args.number_of_philosophers / 2))))
 		return (SEM_OPEN);
-	if (!(philosophers->params.forks = sem_open("/forks", O_CREAT | O_TRUNC | O_RDWR, S_IRWXU, \
+	if (!(philosophers->params.forks = sem_open("/forks", O_CREAT \
+	| O_TRUNC | O_RDWR, S_IRWXU, \
 	(int)philosophers->params.args.number_of_philosophers)))
 		return (SEM_OPEN);
 	status = set_philosophers(philosophers);
