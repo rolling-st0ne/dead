@@ -6,14 +6,13 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 23:14:47 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/31 16:41:30 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/31 18:14:32 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_THREE_H
 # define PHILO_THREE_H
 
-# include "pthread.h"
 # include <unistd.h>
 # include <stdlib.h>
 # include <sys/time.h>
@@ -22,6 +21,7 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+# include <signal.h>
 
 # define STD_OUT 1
 # define SUCCESS 0
@@ -64,13 +64,14 @@ typedef struct		s_params
 	t_args			args;
 	sem_t			*forks;
 	sem_t			*eating;
+	pid_t			*pid_arr;
 	struct timeval	s_time;
 	short int		stop_sign;
 }					t_params;
 
 typedef struct		s_philosopher
 {
-	pthread_t		id;
+	pid_t			id;
 	int				index;
 	int				ret_val;
 	t_params		*params;

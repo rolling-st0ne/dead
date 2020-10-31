@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 23:18:44 by casteria          #+#    #+#             */
-/*   Updated: 2020/10/31 16:42:01 by casteria         ###   ########.fr       */
+/*   Updated: 2020/10/31 18:14:21 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,35 +26,28 @@ int						start(t_philosophers *p)
 	while (index < p->params.args.number_of_philosophers)
 	{
 		phil = p->philosophers[index];
-		status = pthread_create(&p->philosophers[index]->id, \
-											NULL, vicious_circle, phil);
-		if (status)
-			return (THREAD_INIT);
+		phil->id = fork();
+		if (phil->id == 0)
+			vicious_circle((void *)phil);
 		index++;
 	}
+	waitpid(-1, &status, 0);
 	return (status);
 }
 
 int						wait_till_death(t_philosophers *p)
 {
 	size_t				index;
-	t_philosopher		*philosopher;
-	int					status;
+	t_philosopher		*phil;
 
 	index = 0;
-	status = 0;
-	while (ETERNITY_OF_PAINFUL_EXISTANCE)
+	while (index < p->params.args.number_of_philosophers)
 	{
-		philosopher = p->philosophers[index++];
-		if (philosopher->ret_val)
-		{
-			p->params.stop_sign = 1;
-			return (philosopher->ret_val);
-		}
-		if (index == p->params.args.number_of_philosophers)
-			index = 0;
+		phil = p->philosophers[index];
+		kill(phil->id, SIGINT);
+		index++;
 	}
-	return (status);
+	return (SUCCESS);
 }
 
 int						main(int argc, char **argv)
