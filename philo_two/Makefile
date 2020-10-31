@@ -6,13 +6,13 @@
 #    By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/08 23:14:28 by casteria          #+#    #+#              #
-#    Updated: 2020/10/30 00:58:17 by casteria         ###   ########.fr        #
+#    Updated: 2020/10/31 16:43:08 by casteria         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo_two
 HEADER = philo_two.h
-SRCS =	main.c errors.c utils.c init.c vicious_circle.c clean.c init_utils.c \
+SRCS =	main.c errors.c utils.c init.c vicious_circle.c clean.c \
 		output.c
 OBJS = $(SRCS:.c=.o)
 CC = clang
